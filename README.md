@@ -1,2 +1,2 @@
-# pixie-billing-service
-Billing API
+# pixie-chat-service
+Chat WS
