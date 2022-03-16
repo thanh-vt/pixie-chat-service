@@ -12,7 +12,7 @@ router.get('/webhook', function(req, res, next) {
 
 router.post('/webhook', function(req, res, next) {
   console.log(req.body);
-  res.send(req.query['hub.challenge']);
+  res.json(req.body);
 });
 
 module.exports = router;
