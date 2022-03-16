@@ -11,12 +11,8 @@ router.get('/webhook', function(req, res, next) {
 });
 
 router.post('/webhook', function(req, res, next) {
-  if (req.query['hub.verify_token'] === 'thanhvt') {
-    console.log(req.body);
-    res.send(req.query['hub.challenge']);
-  } else {
-    res.send('nothing');
-  }
+  console.log(req.body);
+  res.send(req.query['hub.challenge']);
 });
 
 module.exports = router;
