@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 export type ChatDocument = Chat & Document;
 
-@Schema()
+@Schema({ collection: 'chat' })
 export class Chat {
   @Prop({ type: mongoose.Schema.Types.ObjectId })
   id: string;

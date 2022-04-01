@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 export type UserDocument = User & Document;
 
-@Schema()
+@Schema({ collection: 'user' })
 export class User {
   @Prop({ type: mongoose.Schema.Types.ObjectId })
   id: string;
@@ -12,7 +12,7 @@ export class User {
   name: string;
 
   @Prop({ unique: true })
-  email: number;
+  email: string;
 
   @Prop()
   type: number;
