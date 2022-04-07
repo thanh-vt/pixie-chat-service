@@ -11,7 +11,9 @@ import { MessagesModule } from './messages/messages.module';
   imports: [
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.MONGO_URL, {
-      dbName: process.env.MONGO_DB,
+      // dbName: process.env.MONGO_DB,
+      user: process.env.MONGO_USER,
+      pass: process.env.MONGO_PASS,
     }),
     UsersModule,
     ChatsModule,
