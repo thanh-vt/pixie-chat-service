@@ -15,7 +15,7 @@ import { MessagesModule } from './messages/messages.module';
     }),
     UsersModule,
     ChatsModule,
-    MessagesModule
+    MessagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
