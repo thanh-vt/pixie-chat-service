@@ -6,10 +6,16 @@ import {
 import { MessagesService } from './messages.service';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { UpdateMessageDto } from './dto/update-message.dto';
+import { WS_PATH, WS_PORT } from '../app.config';
 
-@WebSocketGateway(80, { namespace: 'private-chat', transports: ['websocket'] })
+@WebSocketGateway(WS_PORT, {
+  path: WS_PATH,
+  namespace: 'private-chat',
+  transports: ['polling', 'websocket'],
+})
 export class PrivateChatGateway {
-  constructor(private readonly messagesService: MessagesService) {}
+  constructor(private readonly messagesService: MessagesService) {
+  }
 
   @SubscribeMessage('createMessage')
   create(@MessageBody() createMessageDto: CreateMessageDto) {

@@ -31,8 +31,8 @@ export class ChatsService {
   async update(id: number, updateChatDto: UpdateChatDto) {
     const chat = await this.chatModel.findById(id).exec();
     if (chat) {
-      return await chat
-        .update({
+      return await chat.updateOne
+        ({
           ...updateChatDto,
           id,
           updateDate: new Date(),
@@ -47,7 +47,7 @@ export class ChatsService {
   async remove(id: number) {
     const chat = await this.chatModel.findById(id).exec();
     if (chat) {
-      return await chat.delete().exec();
+      return await chat.deleteOne();
     } else
       throw new NotFoundException({
         message: `Chat id #${id} is not found`,

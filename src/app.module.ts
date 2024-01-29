@@ -9,11 +9,13 @@ import { MessagesModule } from './messages/messages.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+    }),
     MongooseModule.forRoot(process.env.MONGO_URL, {
-      // dbName: process.env.MONGO_DB,
       user: process.env.MONGO_USER,
-      pass: process.env.MONGO_PASS,
+      pass: process.env.MONGO_PASS
     }),
     UsersModule,
     ChatsModule,

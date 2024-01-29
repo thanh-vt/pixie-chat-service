@@ -32,7 +32,7 @@ export class UsersService {
     const user = await this.userModel.findById(id).exec();
     if (user) {
       return await user
-        .update({
+        .updateOne({
           ...updateUserDto,
           id,
           updateDate: new Date(),
@@ -47,7 +47,7 @@ export class UsersService {
   async remove(id: number) {
     const user = await this.userModel.findById(id).exec();
     if (user) {
-      return await user.delete().exec();
+      return await user.deleteOne();
     } else
       throw new NotFoundException({
         message: `User id #${id} is not found`,

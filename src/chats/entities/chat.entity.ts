@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
 
-export type ChatDocument = Chat & Document;
+export type ChatDocument = HydratedDocument<Chat>;
 
 @Schema({ collection: 'chat' })
 export class Chat {
