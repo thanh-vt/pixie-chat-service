@@ -8,6 +8,7 @@ declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   app.useGlobalPipes(new ValidationPipe());
   // redis pub/sub config
   const redisIoAdapter = new RedisIoAdapter(app);
