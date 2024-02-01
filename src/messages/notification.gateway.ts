@@ -9,6 +9,7 @@ import { Socket, Server } from 'socket.io';
 import { Logger } from '@nestjs/common';
 import { WS_PATH, WS_PORT } from '../app.config';
 import { AuthService } from '../auth/auth.service';
+import { JwtPayload } from "jsonwebtoken";
 
 @WebSocketGateway(WS_PORT, {
   path: WS_PATH,
@@ -40,8 +41,10 @@ export class NotificationGateway implements OnGatewayInit, OnGatewayConnection, 
     let match = this.authHeaderRegex.exec(tokenHeader)
     if (match != null) {
       const token = match[1];
-      if (await this.authService.validateJwt(token)) {
+      const jwtPayload: string | JwtPayload = await this.authService.validateJwt(token);
+      if (jwtPayload) {
         this.logger.log(`Client authenticated: ${client.id}`);
+        client.data = jwtPayload;
       } else {
         this.logger.log(`Client unauthorized: ${client.id}`);
         client.disconnect(true);

@@ -19,14 +19,12 @@ export class AuthService {
 
   async validateJwt(token: string) {
     const pubKeys = await this.jwksClient.getSigningKeys();
-    const jwtValidation = { valid: false };
     for (let pubKey of pubKeys) {
       // @ts-ignore
       const payload: JwtPayload | string = verify(token, pubKey.getPublicKey());
-      jwtValidation.valid = !!payload;
-      if (jwtValidation.valid) return true;
+      if (payload) return payload;
     }
-    return false;
+    return null;
   }
 
 }

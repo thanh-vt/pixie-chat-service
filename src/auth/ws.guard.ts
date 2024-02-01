@@ -1,6 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
+import { Socket } from "socket.io";
 
 @Injectable()
 export class WsAuthGuard extends AuthGuard('jwt') {
@@ -13,9 +14,9 @@ export class WsAuthGuard extends AuthGuard('jwt') {
     // if (!roles) {
     //   return true;
     // }
-    const request = context.switchToHttp().getRequest();
-    // context.switchToWs().getClient().
-    return Boolean(request.user);
+    // const request = context.switchToHttp().getRequest();
+    const socket: Socket = context.switchToWs().getClient();
+    return Boolean(socket.data);
   }
 
   handleRequest(err: any, user: any, info: any, context: ExecutionContext, status?: any) {
