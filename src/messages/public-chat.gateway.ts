@@ -1,6 +1,6 @@
 import {
   ConnectedSocket,
-  MessageBody,
+  MessageBody, OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WsResponse,
@@ -14,7 +14,8 @@ import { WS_PATH, WS_PORT } from '../app.config';
   namespace: 'public-chat',
   transports: ['polling', 'websocket'],
 })
-export class PublicChatGateway {
+export class PublicChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+  private logger: Logger = new Logger('PublicChatGateway');
   @SubscribeMessage('message')
   handleMessage(
     @ConnectedSocket() client: Socket,
@@ -25,5 +26,14 @@ export class PublicChatGateway {
       event: payload.to,
       data: `Hello ${payload.to}, my name is ${payload.from}!`,
     };
+  }
+
+  afterInit(server: any): any {
+  }
+
+  handleConnection(client: any, ...args: any[]): any {
+  }
+
+  handleDisconnect(client: any): any {
   }
 }
