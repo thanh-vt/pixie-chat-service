@@ -7,6 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { MessagesModule } from './messages/messages.module';
 import { AuthModule } from './auth/auth.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { AuthModule } from './auth/auth.module';
       user: process.env.MONGO_USER,
       pass: process.env.MONGO_PASS
     }),
+    ScheduleModule.forRoot(),
     UsersModule,
     ChatsModule,
     MessagesModule,
