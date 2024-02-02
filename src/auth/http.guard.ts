@@ -1,13 +1,12 @@
 import {
   Injectable,
-  CanActivate,
   ExecutionContext,
   UnauthorizedException,
   Logger,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
-import { Socket } from "socket.io";
+import { Observable } from "rxjs";
 
 @Injectable()
 export class HttpAuthGuard extends AuthGuard('jwt') {
@@ -16,12 +15,10 @@ export class HttpAuthGuard extends AuthGuard('jwt') {
     super();
   }
 
-  canActivate(context: ExecutionContext): boolean {
-    const user: any = context.switchToHttp().getRequest().user;
-    this.logger.log('Logged in user', user);
-    if (!user) {
-      throw new UnauthorizedException('User unauthenticated!');
-    }
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const isValidJwt = await super.canActivate(context);
+    if (!isValidJwt) return false;
+    this.logger.log('User: ', context.switchToHttp().getRequest().user);
     return true;
   }
 
